@@ -12,7 +12,6 @@
 #include <algorithm>
 #include <iostream>
 using namespace std;
-
 // BinarySearchTree class
 //
 // CONSTRUCTION: zero parameter

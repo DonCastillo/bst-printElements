@@ -1,5 +1,8 @@
 #include <iostream>
+#include <string>
+#include <cctype>
 #include "BinarySearchTree.h"
+#include "Menu.h"
 
 
 /**
@@ -23,36 +26,58 @@ void printElements(BinarySearchTree<int> &ptr, int minInt)
 int main( )
 {
 
+    Menu menu("BST PRINT ELEMENTS", "Don Castillo");
     int sizeInt, minInt;
     BinarySearchTree<int> tree;
+    bool loop = true;
+    char commandKey;
+    std::string stringInput;
 
-    std::cout << "Binary Search Tree Program" << std::endl;
-    std::cout << "How many integers to input: ";
-    std::cin >> sizeInt;
-    std::cout << "Enter unique integers: " << std::endl;
+    menu.displayTitle();
+    menu.displayInstructions();
 
-    int x;
-    while(sizeInt>0)
-    {
-        std::cin >> x;
+    do{
+        menu.displayCommands();
+        std::cout << "\nHow many integers to input: ";
+        std::cin >> stringInput;
 
-        // insert integer data into the tree as node
-        tree.insert(x);
+        commandKey = menu.getCommandFlag(stringInput);
 
-        sizeInt--;
-    }
+        if (!isdigit(commandKey))
+        {
+             if(commandKey == 'h')
+                menu.displayInstructions();
+             else
+                loop = false;
+        }
+        else
+        {
+            sizeInt = std::stoi(stringInput);
 
-    std::cout << "\nData sorted: \n";
+            int x;
+            while(sizeInt>0)
+            {
+                std::cout << "Enter unique integer: ";
+                std::cin >> x;
 
-    // print all nodes of the tree
-    tree.printTree();
+                // insert integer data into the tree as node
+                tree.insert(x);
+                sizeInt--;
+            }
+
+            std::cout << "\nData sorted: \n";
+
+            // print all nodes of the tree
+            tree.printTree();
 
 
-    std::cout << "\n\nEnter a minimum integer: ";
-    std::cin >> minInt;
+            std::cout << "\n\nEnter a minimum integer: ";
+            std::cin >> minInt;
 
-    // pass the tree and the minimum integer
-    printElements(tree, minInt);
+            // pass the tree and the minimum integer
+            printElements(tree, minInt);
+        }
+    }while(loop);
 
     return 0;
 }
